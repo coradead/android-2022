@@ -17,10 +17,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class FoodAdapter(private val onClick: (Food) -> Unit) :
-    ListAdapter<Food, FoodAdapter.FoodViewHolder>(FlowerDiffCallback) {
+class FoodAdapter(private val onClick: (Food, View) -> Unit) :
+    ListAdapter<Food, FoodAdapter.FoodViewHolder>(FoodDiffCallback) {
 
-    class FoodViewHolder(itemView: View, val onClick: (Food) -> Unit) :
+    class FoodViewHolder(itemView: View, val onClick: (Food, View) -> Unit) :
         RecyclerView.ViewHolder(itemView) {
         private var imageView: ImageView = itemView.findViewById(R.id.iv_food_picture)
         private val foodName: TextView = itemView.findViewById(R.id.tv_food_name)
@@ -32,7 +32,7 @@ class FoodAdapter(private val onClick: (Food) -> Unit) :
         init {
             itemView.setOnClickListener {
                 currentFood?.let {
-                    onClick(it)
+                    onClick(it, itemView)
                 }
             }
         }
@@ -75,7 +75,7 @@ class FoodAdapter(private val onClick: (Food) -> Unit) :
         holder.bind(foodItem)
     }
 
-    object FlowerDiffCallback : DiffUtil.ItemCallback<Food>() {
+    object FoodDiffCallback : DiffUtil.ItemCallback<Food>() {
         override fun areItemsTheSame(oldItem: Food, newItem: Food): Boolean {
             return oldItem.id == newItem.id
         }

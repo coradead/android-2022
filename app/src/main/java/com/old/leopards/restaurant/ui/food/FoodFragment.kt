@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.old.leopards.restaurant.databinding.FragmentFoodBinding
 import com.old.leopards.restaurant.models.Food
 import kotlinx.coroutines.flow.collect
@@ -43,7 +44,12 @@ class FoodFragment : Fragment() {
             false
         )
 
-        val adapter = FoodAdapter { foodItem -> adapterOnClickDescription(foodItem) }
+        val adapter = FoodAdapter { foodItem: Food, viewItem: View ->
+            adapterOnClickDescription(
+                foodItem,
+                viewItem
+            )
+        }
         binding.rvFoodList.adapter = adapter
 
         lifecycleScope.launchWhenStarted {
@@ -53,8 +59,9 @@ class FoodFragment : Fragment() {
         }
     }
 
-    private fun adapterOnClickDescription(foodItem: Food) {
+    private fun adapterOnClickDescription(foodItem: Food, viewItem: View) {
         Log.d("DEBUG", "Layout press")
+        Snackbar.make(viewItem, "Not implemented yet", Snackbar.LENGTH_LONG).show()
         /*
         TODO open description.
 
